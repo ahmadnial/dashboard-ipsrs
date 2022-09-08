@@ -3,6 +3,7 @@
                                                     include "conn.php";
 
                                                     if (isset($_POST['update'])) {
+                                                        $jr = $_POST['jam_respon'];
                                                         $jk = $_POST['jenis_kerusakan2'];
                                                         $iden = $_POST['identifikasi'];
                                                         $rtl = $_POST['rtl'];
@@ -12,7 +13,7 @@
                                                         $biaya = $_POST['biaya'];
                                                         $ket = $_POST['ket'];
                                                         $id = $_POST['id'];
-                                                        $sql2 = " UPDATE order_perbaikan set jenis_kerusakan2='$jk', identifikasi='$iden', rtl='$rtl', target='$target', selesai='$selesai', 
+                                                        $sql2 = " UPDATE order_perbaikan set jam_respon='$jr', jenis_kerusakan2='$jk', identifikasi='$iden', rtl='$rtl', target='$target', selesai='$selesai', 
                                                         petugas='$petugas', biaya='$biaya', ket='$ket' where id='$id' ";
                                                         $query2 = sqlsrv_query($conn, $sql2) or die(sqlsrv_errors());;
                                                         if ($query2) {

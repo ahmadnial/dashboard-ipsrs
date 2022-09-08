@@ -1,11 +1,4 @@
-<?php
-session_start();
-
-if (!isset($_SESSION["login"])) {
-    header("location: http://192.168.10.7:277/IT-portal/index.php");
-    exit;
-}
-include 'template/header.php';
+<?php include 'template/header.php';
 include "proses.php"; ?>
 
 

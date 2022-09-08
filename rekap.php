@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-if (!isset($_SESSION["login"])) {
-  header("location: http://192.168.10.7:277/IT-portal/index.php");
-  exit;
-}
-
 include 'template/header.php'; ?>
 
 <!-- <div class="content-wrapper"> -->
@@ -67,6 +60,7 @@ include 'template/header.php'; ?>
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
+                  <th>jam</th>
                   <th>Unit/Ins</th>
                   <th>Nama Barang</th>
                   <th>jenis/Tipe</th>
@@ -74,6 +68,7 @@ include 'template/header.php'; ?>
                   <th>Ket.</th>
                   <th>Pelapor</th>
                   <th>Status</th>
+                  <th>Waktu Respon</th>
                   <th>Jenis Kerusakan</th>
                   <th>Identifikasi</th>
                   <th>RTL</th>
@@ -102,6 +97,7 @@ include 'template/header.php'; ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
                       <td><?php echo $data['tanggal']; ?></td>
+                      <td><?php echo $data['jam']; ?></td>
                       <td><?php echo $data['layanan']; ?></td>
                       <td><?php echo $data['nm_brg']; ?></td>
                       <td><?php echo $data['jenis_tipe']; ?></td>
@@ -109,6 +105,7 @@ include 'template/header.php'; ?>
                       <td><?php echo $data['keterangan']; ?></td>
                       <td><?php echo $data['pelapor']; ?></td>
                       <td class="text-danger"><?php echo $data['status']; ?></td>
+                      <td><?php echo $data['jam_respon']; ?></td>
                       <td><?php echo $data['jenis_kerusakan2']; ?></td>
                       <td><?php echo $data['identifikasi']; ?></td>
                       <td><?php echo $data['rtl']; ?></td>
@@ -151,6 +148,10 @@ include 'template/header.php'; ?>
 
                               <!-- Add IPSRS -->
 
+                              <div class="f-group mt-2">
+                                <label for="">Jam</label>
+                                <input type="time" id="" name="jam_respon" placeholder="" class="form-control" required>
+                              </div>
                               <div class="mb-3 mt-3">
                                 <label for="alamat" class="form-label">Jenis Kerusakan</label>
                                 <textarea class="form-control" name="jenis_kerusakan2" id="" rows="3" required="Silahkan lengkapi dulu!" placeholder="Tuliskan Jenis Kerusakan"><?php echo $data['jenis_kerusakan2']; ?></textarea>
@@ -279,6 +280,7 @@ include 'template/header.php'; ?>
 <script src="dashboard/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+<script src="js/autoDate.js"></script>
 <!-- Page specific script -->
 <script>
   $(function() {
