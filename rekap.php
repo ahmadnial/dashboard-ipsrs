@@ -1,31 +1,51 @@
 <?php
 
-session_start();
+// session_start();
 
-if (!isset($_SESSION["login"])) {
-  header("location: http://192.168.10.7:277/IT-portal/index.php");
-  exit;
-}
+// if (!isset($_SESSION["login"])) {
+//   header("location: http://192.168.10.7:277/IT-portal/index.php");
+//   exit;
+// }
 
 include 'template/header.php'; ?>
+<style>
+  /* .notif {
+    -webkit-animation: invalid 1s infinite;
 
-<!-- <div class="content-wrapper"> -->
+    -moz-animation: invalid 1s infinite;
 
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <!-- <h1>Dashboardnya Bu kesekretariatan</h1> -->
-      </div>
-      <div class="col-sm">
-        <ol class="breadcrumb float-sm-right">
-          <!-- <li class="breadcrumb-item"><a href="#">Soon</a></li>
-          <li class="breadcrumb-item active">Soon</li> -->
-        </ol>
-      </div>
-    </div>
-  </div><!-- /.container-fluid -->
-</section>
+    -o-animation: invalid 1s infinite;
+
+    animation: invalid 1s infinite;
+
+  } */
+  .notif {
+    /* background-color: blueviolet; */
+    font-style: oblique;
+  }
+
+  blink {
+    animation: 1s linear infinite condemned_blink_effect;
+  }
+
+  @keyframes condemned_blink_effect {
+    0% {
+      visibility: hidden;
+    }
+
+    50% {
+      visibility: hidden;
+    }
+
+    100% {
+      visibility: visible;
+    }
+  }
+</style>
+<link rel="stylesheet" href="dashboard/plugins/select2/css/select2.min.css">
+
+
+
 
 <!-- Main content -->
 <section class="content">
@@ -57,14 +77,14 @@ include 'template/header.php'; ?>
                               <option value="1">Belum Terisi</option>
                               <option value="">Sudah Terisi</option>
                             </select> -->
-                      <button type="submit" name="cari" class="btn btn-primary ml-3">Search</button>
+                      <button type="submit" name="cari" class="btn btn-success ml-3">Search</button>
                     </div>
                   </div>
                 </div>
               </div>
             </form>
             <table id="example1" class="table table-bordered table-striped">
-              <thead class="bg-info">
+              <thead class="bg-gray">
                 <tr>
                   <th>No</th>
                   <th>Tanggal</th>
@@ -112,7 +132,9 @@ include 'template/header.php'; ?>
                       <td><?php echo $data['jenis_kerusakan']; ?></td>
                       <td><?php echo $data['keterangan']; ?></td>
                       <td><?php echo $data['pelapor']; ?></td>
-                      <td class="text-danger"><?php echo $data['status']; ?></td>
+                      <td class="notif bg-warning" id="statuss">
+                        <blink><b><?php echo $data['status']; ?></b></blink>
+                      </td>
                       <td><?php echo $data['jam_respon']; ?></td>
                       <td><?php echo $data['jenis_kerusakan2']; ?></td>
                       <td><?php echo $data['identifikasi']; ?></td>
@@ -123,7 +145,7 @@ include 'template/header.php'; ?>
                       <td><?php echo $data['biaya']; ?></td>
                       <td><?php echo $data['ket']; ?></td>
                       <td>
-                        <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#ModalMadil<?php echo $data['id']; ?>">Click Me!</button>
+                        <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#ModalMadil<?php echo $data['id']; ?>">Edit / Add</button>
                         <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#ModalStatus<?php echo $data['id']; ?>">Status &nbsp;&nbsp;&nbsp;&nbsp;</button>
                       </td>
                     </tr>
@@ -158,7 +180,7 @@ include 'template/header.php'; ?>
 
                               <div class="f-group mt-2">
                                 <label for="">Jam</label>
-                                <input type="time" id="" name="jam_respon" placeholder="" class="form-control" required>
+                                <input type="time" id="" name="jam_respon" placeholder="" class="form-control" required value="<?php echo $data['jam_respon']; ?>">
                               </div>
                               <div class="mb-3 mt-3">
                                 <label for="alamat" class="form-label">Jenis Kerusakan</label>
@@ -180,13 +202,25 @@ include 'template/header.php'; ?>
                                 <label for="">Tanggal Selesai Pengerjaan</label>
                                 <input type="date" id="" name="selesai" placeholder="" class="form-control" required value="<?php echo $data['selesai']; ?>">
                               </div>
-                              <div class="mb-3 mt-3">
+                              <!-- <div class="mb-3 mt-3">
                                 <label for="alamat" class="form-label">Petugas</label>
                                 <textarea class="form-control" name="petugas" id="" rows="2" placeholder=""><?php echo $data['petugas']; ?></textarea>
+                              </div> -->
+                              <div class="mb-3 mt-3">
+                                <label>Petugas</label>
+                                <div class="select2-purple">
+                                  <select class="select2" name="timlist[]" multiple="multiple" data-placeholder="Select a Man" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <option value="Suko Prasojo">Suko</option>
+                                    <option value="Tri Adi N">Si Tri</option>
+                                    <option value="Setyo Yulianto">Setyo</option>
+                                    <option value="Mujiharjo">Mujex</option>
+                                    <option value="Yeni Debora">Debora</option>
+                                  </select>
+                                </div>
                               </div>
                               <div class="mb-3 mt-3">
                                 <label for="alamat" class="form-label">Biaya</label>
-                                <textarea class="form-control" name="biaya" id="" rows="1" placeholder=""><?php echo $data['biaya']; ?></textarea>
+                                <input type="text" class="form-control" name="biaya" id="biaya" value="" data-type="currency" placeholder="Auto Currency" value="<?php echo $data['biaya']; ?>">
                               </div>
                               <div class="mb-3 mt-3">
                                 <label for="alamat" class="form-label">Keterangan</label>
@@ -244,26 +278,11 @@ include 'template/header.php'; ?>
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 <!-- /.content-wrapper -->
 <footer class="main-footer">
   <div class="float-right d-none d-sm-inline">
-    We serve, Anything you want
-    <strong>Copyright &copy; 2022 <a href="">IT-RSNR</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2022 <a href="">IT-RSNR</a></strong> | Anything U Want.
 </footer>
 
 
@@ -271,6 +290,28 @@ include 'template/header.php'; ?>
 <script src="dashboard/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="dashboard/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="dashboard/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="dashboard/plugins/moment/moment.min.js"></script>
+<script src="dashboard/plugins/inputmask/jquery.inputmask.min.js"></script>
+<!-- date-range-picker -->
+<script src=dashboard/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src=dashboard/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="dashboard/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="dashboard/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- BS-Stepper -->
+<script src="dashboard/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="dashboard/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dashboard/dist/js/adminlte.min.js"></script>
+
 <!-- DataTables  & Plugins -->
 <script src="dashboard/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -284,12 +325,17 @@ include 'template/header.php'; ?>
 <script src="dashboard/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="dashboard/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<!-- BS-Stepper -->
+<script src="dashboard/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+<!-- dropzonejs -->
+<script src="dashboard/plugins/dropzone/min/dropzone.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dashboard/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
+<script src="js/sweetalert2.all.min.js"></script>
+<script src="js/sweetalert2.all.js"></script>
 <script src="js/autoDate.js"></script>
-<!-- Page specific script -->
+
 <script>
   $(function() {
     $("#example1").DataTable({
@@ -308,6 +354,118 @@ include 'template/header.php'; ?>
       "responsive": true,
     });
   });
+
+  $(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  });
+
+  //blinking
+
+  $(function() {
+    var on = false;
+    window.setInterval(function() {
+      on = !on;
+      if (on) {
+        $('.notif').addClass('valid-blink')
+      } else {
+        $('.valid-blink').removeClass('valid-blink')
+      }
+    }, 2000);
+  });
+
+
+  //currency format
+
+  $("input[data-type='currency']").on({
+    keyup: function() {
+      formatCurrency($(this));
+    },
+    blur: function() {
+      formatCurrency($(this), "blur");
+    }
+  });
+
+
+  function formatNumber(n) {
+    // format number 1000000 to 1,234,567
+    return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
+
+  function formatCurrency(input, blur) {
+    // appends $ to value, validates decimal side
+    // and puts cursor back in right position.
+
+    // get input value
+    var input_val = input.val();
+
+    // don't validate empty input
+    if (input_val === "") {
+      return;
+    }
+
+    // original length
+    var original_len = input_val.length;
+
+    // initial caret position 
+    var caret_pos = input.prop("selectionStart");
+
+    // check for decimal
+    if (input_val.indexOf(".") >= 0) {
+
+      // get position of first decimal
+      // this prevents multiple decimals from
+      // being entered
+      var decimal_pos = input_val.indexOf(".");
+
+      // split number by decimal point
+      var left_side = input_val.substring(0, decimal_pos);
+      var right_side = input_val.substring(decimal_pos);
+
+      // add commas to left side of number
+      left_side = formatNumber(left_side);
+
+      // validate right side
+      right_side = formatNumber(right_side);
+
+      // On blur make sure 2 numbers after decimal
+      if (blur === "blur") {
+        right_side += "00";
+      }
+
+      // Limit decimal to only 2 digits
+      right_side = right_side.substring(0, 2);
+
+      // join number by .
+      input_val = "Rp" + left_side + "." + right_side;
+
+    } else {
+      // no decimal entered
+      // add commas to number
+      // remove all non-digits
+      input_val = formatNumber(input_val);
+      input_val = "Rp" + input_val;
+
+      // final formatting
+      // if (blur === "blur") {
+      //   input_val += ".00";
+      // }
+    }
+
+    // send updated string to input
+    input.val(input_val);
+
+    // put caret back in the right position
+    var updated_len = input_val.length;
+    caret_pos = updated_len - original_len + caret_pos;
+    input[0].setSelectionRange(caret_pos, caret_pos);
+  }
 </script>
 </body>
 

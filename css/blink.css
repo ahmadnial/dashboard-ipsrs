@@ -1,0 +1,27 @@
+@-webkit-keyframes invalid {
+    from { background-color: rgb(4, 250, 156); }
+    to { background-color: inherit; }
+  }
+  @-moz-keyframes invalid {
+    from { background-color: rgb(4, 214, 186); }
+    to { background-color: inherit; }
+  }
+  @-o-keyframes invalid {
+    from { background-color: rgb(2, 247, 153); }
+    to { background-color: inherit; }
+  }
+  @keyframes invalid {
+    from { background-color: rgb(19, 231, 161); }
+    to { background-color: inherit; }
+  }
+  .invalid {
+    -webkit-animation: invalid 1s infinite; /* Safari 4+ */
+    -moz-animation:    invalid 1s infinite; /* Fx 5+ */
+    -o-animation:      invalid 1s infinite; /* Opera 12+ */
+    animation:         invalid 1s infinite; /* IE 10+ */
+  }
+  
+  td {
+      padding: 1em;
+  }
+  
